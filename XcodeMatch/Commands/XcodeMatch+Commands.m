@@ -26,7 +26,7 @@
         // handle arguments with `process`
         BOOL SHOW_PATH = [process flag:@"show-path"];
         BOOL SHOW_VERSION = [process flag:@"show-version"];
-        BOOL ONLY_LASTEST = [process flag:@"only-lastest"];
+        BOOL ONLY_LASTEST = [process flag:@"only"];
         BOOL SORT = [process flag:@"sort"];
         BOOL BETA = [process flag:@"beta"];
         
