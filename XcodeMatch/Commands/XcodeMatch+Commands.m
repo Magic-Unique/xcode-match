@@ -43,11 +43,25 @@
             return 1;
         }
         
+        NSArray *IGNORE_NAMES = ({
+            NSArray *ignoreList = nil;
+            NSString *IGNORE = CLEnvironment[@"XCODE_MATCH_IGNORE"];
+            if (IGNORE) {
+                ignoreList = [IGNORE componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            }
+            ignoreList;
+        });
+        
         // Filter
         NSMutableArray<XMApplication *> *targets = list;
         if (!BETA) {
             [targets filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(XMApplication *evaluatedObject, id bindings) {
                 return !evaluatedObject.isBeta;
+            }]];
+        }
+        if (IGNORE_NAMES) {
+            [targets filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(XMApplication *evaluatedObject, id bindings) {
+                return ![IGNORE_NAMES containsObject:evaluatedObject.path.lastPathComponent];
             }]];
         }
         if (process.queries[@"version"]) {
